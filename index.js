@@ -5,7 +5,7 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const SOUNDS_DIR = path.join(__dirname, 'sounds');
+const SOUNDS_DIR = path.join(__dirname, 'Poke-Sounds');
 
 app.get('/', (req, res) => {
   res.send('API de sonidos Pokémon Gen 1-5');
@@ -13,7 +13,9 @@ app.get('/', (req, res) => {
 
 app.get('/sound/:id', (req, res) => {
   const { id } = req.params;
-  const filename = `${id.padStart(3, '0')}.wav`;
+  // Eliminar ceros a la izquierda del ID
+  const idNum = parseInt(id, 10);
+  const filename = `${idNum}.wav`;
   const filePath = path.join(SOUNDS_DIR, filename);
 
   if (fs.existsSync(filePath)) {
